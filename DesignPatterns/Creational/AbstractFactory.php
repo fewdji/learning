@@ -7,46 +7,46 @@ namespace DesignPatterns\Creational\AbstractFactory;
  */
 abstract class AbstractFactory
 {
-    abstract public function createText(string $content);
+    abstract public function createData(string $content);
     abstract public function createDecoder();
 }
 
 /**
- * HTML фабрика
+ * Фабрика для базы данных
  */
-class HTMLFactory
+class DBFactory
 {
-    public function createText(string $content): HTMLText
+    public function createData(string $data): DBData
     {
-        return new HTMLText($content);
+        return new DBData($data);
     }
 
-    public function createDecoder(): HTMLDecoder
+    public function createDecoder(): DBDecoder
     {
-        return new HTMLDecoder();
+        return new DBDecoder();
     }
 }
 
 /**
- * JSON фабрика
+ * Фабрика для кэша
  */
-class JSONFactory
+class CacheFactory
 {
-    public function createText(string $content): JSONText
+    public function createData(string $data): CacheData
     {
-        return new JSONText($content);
+        return new CacheData($data);
     }
 
-    public function createDecoder(): JSONDecoder
+    public function createDecoder(): CacheDecoder
     {
-        return new JSONDecoder();
+        return new CacheDecoder();
     }
 }
 
 /**
- * Абстрактный класс Text заставляет реализовать методы для генерации и вывода контента
+ * Абстрактный класс Data заставляет реализовать методы для генерации и вывода данных
  */
-abstract class Text
+abstract class Data
 {
     public $text;
 
@@ -58,19 +58,19 @@ abstract class Text
     abstract public function printText();
 }
 
-class HTMLText extends Text
+class DBData extends Data
 {
     public function printText()
     {
-        print 'HTML: ' . $this->text . PHP_EOL;
+        print 'From DB: ' . $this->text . PHP_EOL;
     }
 }
 
-class JSONText extends Text
+class CacheData extends Data
 {
     public function printText()
     {
-        print 'JSON: ' . $this->text . PHP_EOL;
+        print 'From cache: ' . $this->text . PHP_EOL;
     }
 }
 
@@ -82,30 +82,30 @@ interface Decoder
     public function decode();
 }
 
-class HTMLDecoder implements Decoder
+class DBDecoder implements Decoder
 {
     public function decode()
     {
-        print 'HTML decoded' . PHP_EOL;
+        print 'DB data has been decoded' . PHP_EOL;
     }
 }
 
-class JSONDecoder implements Decoder
+class CacheDecoder implements Decoder
 {
     public function decode()
     {
-        print 'JSON decoded' . PHP_EOL;
+        print 'Cache data has been decoded' . PHP_EOL;
     }
 }
 
 /**
  * Тесты
  */
-$html = new HTMLFactory();
-$json = new JSONFactory();
+$db = new DBFactory();
+$cache = new CacheFactory();
 
-$html->createText('Hello!')->printText();
-$json->createText('World!')->printText();
+$db->createData('Hello!')->printText();
+$cache->createData('World!')->printText();
 
-$html->createDecoder()->decode();
-$json->createDecoder()->decode();
+$db->createDecoder()->decode();
+$cache->createDecoder()->decode();
