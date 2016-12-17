@@ -52,7 +52,7 @@ abstract class Furniture
 class Chair extends Furniture
 {
     /**
-     * Получить название мебели
+     * Возвращает название мебели
      * @return string
      */
     public function getName()
@@ -64,7 +64,7 @@ class Chair extends Furniture
 class Table extends Furniture
 {
     /**
-     * Получить название мебели
+     * Возвращает название мебели
      * @return string
      */
     public function getName()
